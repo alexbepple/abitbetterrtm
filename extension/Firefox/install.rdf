@@ -5,7 +5,7 @@
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
                    em:id="andrew@paprotsky.com"
                    em:name="A Bit Better RTM"
-                   em:version="0.0.2.4"
+                   em:version="0.0.2.5"
                    em:creator="Andrew Paprotsky"
                    em:description="Small improvements for Remember The Milk" >
 				<em:targetApplication>
