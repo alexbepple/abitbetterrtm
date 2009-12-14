@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" id="abitbetterrtm-overlay">
+<script type="application/x-javascript" src="chrome://abitbetterrtm/content/json.js" />
+<script type="application/x-javascript">
+<![CDATA[
+
+//comunication between XUL and HTML - http://pcscholl.de/2007/08/24/communication-between-html-and-xul/
+
+var ABBRTM = {};
+
+ABBRTM.DataTransferListener = {
+	ELWMS_EVENT_NAME: "ELWMSDataTransferEvent",
+	ELWMS_EVENT_BACK_NAME: "ELWMSDataBackchannelEvent",
+	/**
+	 * Listener that subscribes to custom ELWMS Event
+	 *
+	 * @param {Event} aEvent the event thrown by the HTML Element
+	 */
+	listenToHTML: function(aEvent) {
+		// first we have to check if we allow this... based on URL or what?
+		if (/^http.*\/\/www\.rememberthemilk\.com\/home\/.*$/.test(aEvent.target.ownerDocument.location.href)) {
+			// TODO: add security here (e.g. from Pref/Setting of applet serving host)!
+			// return;
+		}
+		// data is a escaped JSON String
+		var data = JSON.parse(unescape(aEvent.target.getAttribute("data")));
+		// what to do with the received data?
+		var retval = ABBRTM.DataTransferListener.handleData(data, aEvent.target);
+		// if back data is given:
+		if (retval != null) {
+			// add escaped and JSONified Object to <code>returnvalue</code>-Attribute
+			aEvent.target.setAttribute("returnvalue", escape(JSON.stringify(retval)));
+			// fire event to notify HTML-Page of return value
+			var ev = window.document.createEvent("Event");
+			ev.initEvent(ABBRTM.DataTransferListener.ELWMS_EVENT_BACK_NAME, true, false);
+			aEvent.target.dispatchEvent(ev);
+		}
+	},
+	/**
+	 * this function should handle all arriving data
+	 *
+	 * @param {Object} data The JSON Object
+	 * @param {HTMLNode} target The node that fired the event
+	 */
+	handleData : function(data, target) {
+		var prefManager = ABBRTM.getPrefManager();
+		var result = null;
+		switch (data.id) {
+			case "configuration":
+				if (data.direction === "get") {
+					var entryPage = "";
+					if (!("platform" in window)) {
+						entryPage = gBrowser.getBrowserForDocument(target.ownerDocument).sessionHistory.getEntryAtIndex(0, false).URI.spec;
+					}
+
+					result = {
+						listsSortOrder: JSON.parse(prefManager.getCharPref("extensions.abitbetterrtm.listsSortOrder")),
+						displayTabsToTheLeft: prefManager.getBoolPref("extensions.abitbetterrtm.displayTabsToTheLeft"),
+						hiddenLists: prefManager.getCharPref("extensions.abitbetterrtm.hiddenLists").split(','),
+						showTasksCount: prefManager.getBoolPref("extensions.abitbetterrtm.showTasksCount"),
+						quickAddList:  prefManager.getBoolPref("extensions.abitbetterrtm.quickAddList"),
+						uniqueURLForListAndTask: prefManager.getBoolPref("extensions.abitbetterrtm.uniqueURLForListAndTask"),
+						entryPage: entryPage,
+						taskListWidth: prefManager.getIntPref("extensions.abitbetterrtm.taskListWidth")
+					}	
+				}
+				break;
+			case "listsSortOrder":
+				if (data.direction === "set") {
+					prefManager.setCharPref("extensions.abitbetterrtm.listsSortOrder", JSON.stringify(data.data));
+				}
+				break;
+			case "displayTabsToTheLeft":
+				if (data.direction === "set") {
+					prefManager.setBoolPref("extensions.abitbetterrtm.displayTabsToTheLeft", data.data);
+				}
+				break;
+			case "showTasksCount":
+				if (data.direction === "set") {
+					prefManager.setBoolPref("extensions.abitbetterrtm.showTasksCount", data.data);
+				}
+				break;
+			case "quickAddList":
+				if (data.direction === "set") {
+					prefManager.setBoolPref("extensions.abitbetterrtm.quickAddList", data.data);
+				}
+				break;
+			case "uniqueURLForListAndTask":
+				if (data.direction === "set") {
+					prefManager.setBoolPref("extensions.abitbetterrtm.uniqueURLForListAndTask", data.data);
+				}
+				break;
+			case "hiddenLists":
+				if (data.direction === "set") {
+					prefManager.setCharPref("extensions.abitbetterrtm.hiddenLists", data.data);
+				}
+				break;
+			case "taskListWidth":
+				if (data.direction === "set") {
+					prefManager.setIntPref("extensions.abitbetterrtm.taskListWidth", data.data);
+				}
+				break;
+		}
+
+		return result;
+	}
+}
+ 
+/**
+ * Acc. to web page (see above) the 4th parameter denotes if Events are accepted from
+ * unsecure sources.
+ */
+document.addEventListener(ABBRTM.DataTransferListener.ELWMS_EVENT_NAME, ABBRTM.DataTransferListener.listenToHTML, false, true);
+
+ABBRTM.getScript = function(url) {
+    var ioService=Components.classes["@mozilla.org/network/io-service;1"]
+        .getService(Components.interfaces.nsIIOService);
+    var scriptableStream=Components
+        .classes["@mozilla.org/scriptableinputstream;1"]
+        .getService(Components.interfaces.nsIScriptableInputStream);
+    var channel=ioService.newChannel(url,null,null);
+    var input=channel.open();
+    scriptableStream.init(input);
+    var str=scriptableStream.read(input.available());
+    scriptableStream.close();
+    input.close();
+    return str;
+}
+
+ABBRTM.getPrefManager = function() {
+	 return Components.classes["@mozilla.org/preferences-service;1"]
+                                .getService(Components.interfaces.nsIPrefBranch);
+}
+
+ABBRTM.appendABitBetterRTMCode = function(e) {
+	if (/^http.*\/\/www\.rememberthemilk\.com\/home\/.*$/.test(e.originalTarget.location.href)) {
+		if(e.originalTarget.body) {
+			var scriptElement = e.originalTarget.createElement("script");
+			var text = "";
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/json.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/frameworks/jquery-1.3.2.min.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/frameworks/jquery-ui-1.7.2.custom.min.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/frameworks/jquery.corner.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/css/ui.resizable.css.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/css/abitbetterrtm.css.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/communicator.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/utility.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/location.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/configuration.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/listAutocompleteStore.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/autocompleteList.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/autocomplete.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/listAdder.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/listTabs.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/shortcut.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/taskList.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/listList.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/settings.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/aBitBetterRTM.js");
+			text += ABBRTM.getScript("chrome://abitbetterrtm/content/init.js");
+
+			scriptElement.appendChild(e.originalTarget.createTextNode(text));
+			e.originalTarget.body.appendChild(scriptElement);
+		}
+	}
+}
+
+window.addEventListener("load", function() {
+    var appcontent = (window.document.getElementById("appcontent") || window.document.getElementById("browser_content"));
+    if (appcontent) {
+        if (!appcontent.abitbetterrtm) {
+            appcontent.abitbetterrtm = true;
+			appcontent.addEventListener("DOMContentLoaded", ABBRTM.appendABitBetterRTMCode, false);
+        }
+    }
+}, false);
+]]></script></overlay>

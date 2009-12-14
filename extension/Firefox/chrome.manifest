@@ -1,0 +1,3 @@
+content	abitbetterrtm	content/
+overlay	chrome://browser/content/browser.xul	chrome://abitbetterrtm/content/initialize.xul
+overlay	chrome://webrunner/content/webrunner.xul	chrome://abitbetterrtm/content/initialize.xul
