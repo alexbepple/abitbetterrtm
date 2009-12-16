@@ -1,0 +1,11 @@
+{
+	"update_url":"http://clients2.google.com/service/update2/crx",
+   	"name": "A Bit Better RTM",
+   	"version": "0.0.2.5",
+   	"description": "Small improvements for Remember The Milk interface",
+   	"content_scripts": [ {
+     	"js": [ "js/aBitBetterRTM_Loader.js" ],
+		"matches": [ "http://www.rememberthemilk.com/*", "https://www.rememberthemilk.com/*" ]
+   } ],
+   "permissions": [ "http://www.rememberthemilk.com/*", "https://www.rememberthemilk.com/*" ]
+}
