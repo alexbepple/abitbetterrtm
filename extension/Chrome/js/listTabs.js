@@ -10,8 +10,7 @@ ABBRTM.ListTabs = function(parent) {
 	if (ABBRTM.configuration.displayTabsToTheLeft()) {
 		this.$div = $('<div/>')
 		.addClass("taskcloudcontent")
-		.css({border: "1px solid #CACACA", padding: "5px 4px", cssFloat: "left", marginRight: "5px"})
-		.corner("keep 7px")
+		.css({border: "1px solid #CACACA", borderRadius: "7px", padding: "5px 4px", cssFloat: "left", marginRight: "5px"})
 		.prependTo("#appview");
 
 		var $listTabsDiv = $(listTabs.div)
@@ -321,18 +320,19 @@ ABBRTM.ListTabs.prototype.blitDiv = function() {
 
 						var elements = $("#listtabs ul").sortable("toArray");
 						$.each(elements, function(i, elementID) {
-								var $element = $("#" + elementID);
+							var $element = $("#" + elementID);
 
-								if ($element.attr("id") !== $(ui.item).attr("id")) {
-									$element.click(that.itemClickHandler);
-								}
+							if ($element.attr("id") !== $(ui.item).attr("id")) {
+								$element.click(that.itemClickHandler);
+							}
 						});
 
 						$(ui.item).one("click", function(event) { 
 							event.stopImmediatePropagation();
+							event.preventDefault();
 							$(this).click(that.itemClickHandler);
 							return false;
-						}); 
+						});
 					},
 					update: function(event, ui) { 
 						var newSortOrder = {};
@@ -348,9 +348,6 @@ ABBRTM.ListTabs.prototype.blitDiv = function() {
 
 						ABBRTM.configuration.listsSortOrder(newSortOrder);
 						that.applySortOrder(newSortOrder);
-
-						window.listTabs.sort();
-						window.listTabs.blitDiv();
 					} 
 				});
 		$list.disableSelection();

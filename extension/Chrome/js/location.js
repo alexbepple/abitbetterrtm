@@ -6,9 +6,12 @@ ABBRTM.Location = function() {
 	if (ABBRTM.configuration.uniqueURLForListAndTask()) {
 		this.locationHash = "";
 
-		if (ABBRTM.configuration.entryPage().indexOf("section.tasks/") >= 0) {
-			this.hashParams(ABBRTM.configuration.entryPage().substring(ABBRTM.configuration.entryPage().indexOf("section.tasks/") + 14));
+		if (location.hash.indexOf("section.tasks/") >= 0) {
+			this.hashParams(location.hash.substring(location.hash.indexOf("section.tasks/") + 14));
 
+			if (view.getSelected() !== "Tasks") {
+        		view.selectView("Tasks");
+			}
 			ABBRTM.aBitBetterRTM.taskList.selectTaskByID(this.getTaskID());
 			ABBRTM.aBitBetterRTM.listTabs.selectListByID(this.getListID());
 		}
@@ -55,6 +58,10 @@ ABBRTM.Location = function() {
 		var handleTabChanged = function(d, e) {
 			ABBRTM.location.setListID(e[2][1]);
 		};
+
+		if (view.getSelected() === "Tasks" && location.hash === "") {
+			location.hash = "section.tasks";
+		}
 
    		messageBus.subscribe(handleSelectFinished, taskList.list.getUniqueMessageBusName() + "selectFinished");
 		messageBus.subscribe(handleTabChanged, listTabs.mbn + "tabChanged");
@@ -110,7 +117,7 @@ ABBRTM.Location.prototype.hashParams = function(value) {
 		return "";
 	}
 	else {
-		var hash = location.hash.split('/')[0];
+		var hash = (location.hash.split('/')[0] || "section.tasks");
 		hash += "/" + value;
 		location.hash = this.locationHash = hash;
 	}

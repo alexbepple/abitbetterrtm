@@ -13,7 +13,7 @@ ABBRTM.ABitBetterRTM = function() {
 
 	this.initAutocompletes();
 	this.initShortcuts();
-	this.overrideBodyKeyPressHandler();
+	this.overrideBodyKeyDownHandler();
 
     settingsTabs.addEntry("A Bit Better RTM");
     settingsView.addState("A Bit Better RTM", [this.settings], settingsTabs);
@@ -21,9 +21,9 @@ ABBRTM.ABitBetterRTM = function() {
 }
 
 ABBRTM.ABitBetterRTM.prototype.initShortcuts = function() {
-	this.shortcuts.push(new ABBRTM.Shortcut(103, this.autocompletes.goTo, this.autocompletes.goTo.show, true, false, false));
-	this.shortcuts.push(new ABBRTM.Shortcut(109, this.autocompletes.moveTo, this.autocompletes.moveTo.show, true, false, false));
-	this.shortcuts.push(new ABBRTM.Shortcut(47, null, function(){$("#listFilter").focus().effect('highlight', '', 'slow');}, false, false, false));
+	this.shortcuts.push(new ABBRTM.Shortcut(71, this.autocompletes.goTo, this.autocompletes.goTo.show, true, false, false));
+	this.shortcuts.push(new ABBRTM.Shortcut(77, this.autocompletes.moveTo, this.autocompletes.moveTo.show, true, false, false));
+	this.shortcuts.push(new ABBRTM.Shortcut(191, null, function(){$("#listFilter").focus().effect('highlight', '', 'slow');}, false, false, false));
 
 	if (ABBRTM.configuration.displayTabsToTheLeft()) {
 		this.shortcuts.push(new ABBRTM.Shortcut(74, this.listTabs, this.listTabs.selectNextList, false, true, false));
@@ -31,7 +31,7 @@ ABBRTM.ABitBetterRTM.prototype.initShortcuts = function() {
 		this.shortcuts.push(new ABBRTM.Shortcut(79, this.listTabs, this.listTabs.openSelectedList, false, true, false));
 		
 		if (ABBRTM.configuration.quickAddList()) {
-			this.shortcuts.push(new ABBRTM.Shortcut(113, this.listTabs.listAdder, this.listTabs.listAdder.showListEntryBox, false, false, false));
+			this.shortcuts.push(new ABBRTM.Shortcut(81, this.listTabs.listAdder, this.listTabs.listAdder.showListEntryBox, false, false, false));
 		}
 	}
 };
@@ -41,11 +41,9 @@ ABBRTM.ABitBetterRTM.prototype.initAutocompletes = function() {
 	this.autocompletes.moveTo = new ABBRTM.Autocomplete("MOVE TO: ", new ABBRTM.ListAutocompleteStore(this.listTabs), this.listTabs, this.listTabs.moveSelectedTasksToListByName);
 }
 
-ABBRTM.ABitBetterRTM.prototype.overrideBodyKeyPressHandler = function()
-{
+ABBRTM.ABitBetterRTM.prototype.overrideBodyKeyDownHandler = function() {
 	var that = this;
-	var handleKeyPressEvent = function(ev, ignoreCombo)
-	{
+	var handleKeyDownEvent = function(ev) {
 		ev || (ev = window.event);
 		var target = utility.getEventTarget(ev);
 
@@ -71,11 +69,11 @@ ABBRTM.ABitBetterRTM.prototype.overrideBodyKeyPressHandler = function()
 	}
 
 	if (eventMgr) {
-		var oldBodyKeyPressHandler = eventMgr.bodyKeyPressHandler;
+		var oldBodyKeyDownHandler = eventMgr.bodyKeyDownHandler;
 
-		eventMgr.bodyKeyPressHandler = function(ev, ignoreCombo) {
-			if (handleKeyPressEvent(ev, ignoreCombo) === true) {
-				return oldBodyKeyPressHandler.call(eventMgr, ev, ignoreCombo);
+		eventMgr.bodyKeyDownHandler = function(ev) {
+			if (handleKeyDownEvent(ev) === true) {
+				return oldBodyKeyDownHandler.call(eventMgr, ev);
 			}
 
 			return true;

@@ -29,7 +29,7 @@ ABBRTM.ListAdder = function()
 		e.stopPropagation();
 	};
 
-	var handleKeyPressEvent = function(e) {
+	var handleKeyDownEvent = function(e) {
 		if (e.which === 13) { //Enter
 			that.$progressBar.show();
 			if (!that.addList(that.$listEntryBox.val())) {
@@ -37,6 +37,7 @@ ABBRTM.ListAdder = function()
 			}
 		}
 		else if (e.which === 0 || e.which === 27) { // Esc
+			that.$listEntryBox.blur();
 			that.$listEntryBox.val("");
 			that.$listEntryBox.hide();
 		}
@@ -45,12 +46,13 @@ ABBRTM.ListAdder = function()
 	};
 
 	var handleAddingListSuccess = function() {
+		that.$listEntryBox.blur();
 		that.$listEntryBox.val("");
 		that.$listEntryBox.hide();
 		that.$progressBar.hide();
 	}
 
-	this.$listEntryBox.keypress(handleKeyPressEvent);
+	this.$listEntryBox.keydown(handleKeyDownEvent);
 	this.$listEntryBox.blur(handleLostFocus);
 	this.$div.click(handleAddListClick);
 

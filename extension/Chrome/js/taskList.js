@@ -40,7 +40,7 @@ ABBRTM.TaskList.prototype.makeTasksDraggable = function() {
 
 	var that = this;
 	$(".xtr:visible .xtd_arr").draggable({
-			cursorAt: { left: 1, top: 1 },
+			cursorAt: { left: 3, top: 3 },
 			zIndex: 2700,
 			revert: "invalid",
 			revertDuration: 200,

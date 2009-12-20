@@ -76,15 +76,12 @@ ABBRTM.Autocomplete.prototype.bind = function()
 	var inputField = this.inputField;
 	var currentText = "";
 
-	var _handleKeyPressEvent = function(event)
+	var handleKeyDownEvent = function(event)
 	{
 		currentText = inputField.value;
 		if (event.keyCode == 9) // Tab
 		{
-			if (utility) {
-				utility.stopEvent(event);
-			}
-
+			utility.stopEvent(event);
 			return false;
 		}
 		else if (autocompleteList.isVisible)
@@ -108,7 +105,10 @@ ABBRTM.Autocomplete.prototype.bind = function()
 		}
 		else if (event.keyCode == 27)
 		{
+			inputField.blur();
 			autocompleteList.parent.hide();
+			utility.stopEvent(event);
+			return false;
 		}
 	
 		return true;
@@ -134,7 +134,7 @@ ABBRTM.Autocomplete.prototype.bind = function()
 	};
 
 	this.inputField.setAttribute("autocomplete", "off");
-	this.inputField.addEventListener("keypress", _handleKeyPressEvent, false);
+	this.inputField.addEventListener("keydown", handleKeyDownEvent, false);
 	this.inputField.addEventListener("keyup", handleKeyUpEvent, false);
 	this.box.addEventListener("click", handleClickEvent, false);
 	this.autocompleteList.createOutput();
