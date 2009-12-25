@@ -7,8 +7,11 @@ ABBRTM.Location = function() {
 		this.locationHash = "";
 
 		if (ABBRTM.configuration.entryPage().indexOf("section.tasks/") >= 0) {
-			this.hashParams(ABBRTM.configuration.entryPage().substring(ABBRTM.configuration.entryPage().indexOf("section.tasks/") + 14));
+			if (view.getSelected() !== "Tasks") {
+        		view.selectView("Tasks");
+			}
 
+			this.hashParams(ABBRTM.configuration.entryPage().substring(ABBRTM.configuration.entryPage().indexOf("section.tasks/") + 14));
 			ABBRTM.aBitBetterRTM.taskList.selectTaskByID(this.getTaskID());
 			ABBRTM.aBitBetterRTM.listTabs.selectListByID(this.getListID());
 		}
