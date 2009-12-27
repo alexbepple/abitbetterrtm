@@ -88,6 +88,7 @@ ABBRTM.Autocomplete.prototype.bind = function()
 		{
 			if (event.keyCode == 13)// Enter
 			{
+				inputField.blur();
 				autocompleteList.parent.doCallback();
 			}
 			if (event.keyCode == 40)// Key down
