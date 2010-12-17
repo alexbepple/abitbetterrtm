@@ -1,4 +1,4 @@
-var ABBRTM = window.ABBRTM || {};
+ABBRTM = window.ABBRTM || {};
 
 ABBRTM.ABitBetterRTM = function() {
 	this.settings = new ABBRTM.Settings();

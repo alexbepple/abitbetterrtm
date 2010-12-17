@@ -1,4 +1,4 @@
-var ABBRTM = window.ABBRTM || {};
+ABBRTM = window.ABBRTM || {};
 
 ABBRTM.Location = function() {
     this.mbn = this.getUniqueMessageBusName();

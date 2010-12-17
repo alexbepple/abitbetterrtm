@@ -1,6 +1,7 @@
-var ABBRTM = window.ABBRTM || {};
+ABBRTM = window.ABBRTM || {};
 
 ABBRTM.ListTabs = function(parent) {
+    noteMgr.prepareIndex();
 	this.listAdder;
 	this.parent = parent;
 	this.blitted = false;
@@ -165,6 +166,9 @@ ABBRTM.ListTabs.prototype.getTasksCountByListID = function(listID, reloadCache, 
 		var filter = "";
 
 		if (listID === undefined) {
+			if (listTabs.data[listTabs.reverseMap[null]] === undefined || listTabs.data[listTabs.reverseMap[null]][2] === undefined) {
+				return;
+			}
 			filter = listTabs.data[listTabs.reverseMap[null]][2];
 		}
 		else {

@@ -1,4 +1,4 @@
-var ABBRTM = window.ABBRTM || {};
+ABBRTM = window.ABBRTM || {};
 
 ABBRTM.Configuration = function() {
 	this._hiddenLists = JSON.parse(localStorage["abr_hiddenLists"] || "[]");

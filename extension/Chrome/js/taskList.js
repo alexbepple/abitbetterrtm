@@ -1,4 +1,4 @@
-var ABBRTM = window.ABBRTM || {};
+ABBRTM = window.ABBRTM || {};
 
 ABBRTM.TaskList = function() {
 	this.minWidth = 460;

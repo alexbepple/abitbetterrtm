@@ -1,18 +1,23 @@
 var ABBRTM = window.ABBRTM || {};
 
 ABBRTM.appendScript = function(src, callback) {
-	var scriptElement = window.top.document.createElement("script");
-	scriptElement.src = chrome.extension.getURL(src);
-	window.top.document.body.appendChild(scriptElement);
+	if (!window.top.document.getElementById(src)) {
+		var scriptElement = window.top.document.createElement("script");
+		scriptElement.src = chrome.extension.getURL(src);
+		scriptElement.id = src;
+		window.top.document.body.appendChild(scriptElement);
 
-	if (callback) {
-		scriptElement.onload = callback;
+		if (callback) {
+			scriptElement.onload = callback;
+		}
 	}
 }
 
 ABBRTM.appendABitBetterRTMCode = function() {
 	if (!arguments.callee.done) {
 		arguments.callee.done = true;
+
+		ABBRTM.appendScript("js/abbrtm.js");
 
 		ABBRTM.appendScript("frameworks/jquery-1.3.2.min.js", jqueryui);
 		function jqueryui() { ABBRTM.appendScript("frameworks/jquery-ui-1.7.2.custom.min.js", abitbetterrtmCss); }
@@ -36,3 +41,4 @@ ABBRTM.appendABitBetterRTMCode = function() {
 }
 
 ABBRTM.appendABitBetterRTMCode();
+

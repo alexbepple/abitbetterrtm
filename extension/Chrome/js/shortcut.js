@@ -1,4 +1,4 @@
-var ABBRTM = window.ABBRTM || {};
+ABBRTM = window.ABBRTM || {};
 
 ABBRTM.Shortcut = function(key, owner, method, ctrlKey, shiftKey, altKey)
 {
