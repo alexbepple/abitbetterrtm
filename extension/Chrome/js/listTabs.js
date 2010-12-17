@@ -180,6 +180,10 @@ ABBRTM.ListTabs.prototype.getTasksCountByListID = function(listID, reloadCache, 
 				filter = "(" + filter + ") and (status:incomplete)";
 			}
 
+            if (!noteMgr.index) {
+                noteMgr.prepareIndex();
+            }
+
 			if (tasksCount === undefined) {
 				tasksCount = overviewList.getFilteredList(filter).length;
 			}
