@@ -7,10 +7,17 @@ ABBRTM.init = function() {
 	ABBRTM.location = new ABBRTM.Location();
 }
 
-if (searchMgr) {
-	ABBRTM.init();
+function initializeABBRTM() {
+    if (searchMgr) {
+        ABBRTM.init();
+    }
+    else if (messageBus && messageBus.subscribe){
+        messageBus.subscribe(ABBRTM.init, "rtm.initFinished");
+    }
+    else {
+        setTimeout(initializeABBRTM, 500);
+    }
 }
-else {
-	messageBus.subscribe(ABBRTM.init, "rtm.initFinished");
-}
+
+initializeABBRTM();
 
