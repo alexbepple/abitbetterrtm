@@ -12,7 +12,7 @@ ABBRTM.ABitBetterRTM = function() {
 	this.shortcuts = [];
 
 	this.initAutocompletes();
-	this.initShortcuts();
+	this.initShortcutsLikeGmail();
 	this.overrideBodyKeyDownHandler();
 
     settingsTabs.addEntry("A Bit Better RTM");
@@ -21,9 +21,9 @@ ABBRTM.ABitBetterRTM = function() {
 }
 
 ABBRTM.ABitBetterRTM.prototype.initShortcuts = function() {
-	this.shortcuts.push(new ABBRTM.Shortcut(71, this.autocompletes.goTo, this.autocompletes.goTo.show, true, false, false));
-	this.shortcuts.push(new ABBRTM.Shortcut(77, this.autocompletes.moveTo, this.autocompletes.moveTo.show, true, false, false));
-	this.shortcuts.push(new ABBRTM.Shortcut(191, null, function(){$("#listFilter").focus().effect('highlight', '', 'slow');}, false, false, false));
+	this.shortcuts.push(new ABBRTM.Shortcut(71, this.autocompletes.goTo, this.autocompletes.goTo.show, true, false, false)); // Ctrl-G
+	this.shortcuts.push(new ABBRTM.Shortcut(77, this.autocompletes.moveTo, this.autocompletes.moveTo.show, true, false, false)); // Ctrl-M
+	this.shortcuts.push(new ABBRTM.Shortcut(191, null, function(){$("#listFilter").focus().effect('highlight', '', 'slow');}, false, false, false)); // /
 
 	if (ABBRTM.configuration.displayTabsToTheLeft()) {
 		this.shortcuts.push(new ABBRTM.Shortcut(74, this.listTabs, this.listTabs.selectNextList, false, true, false));
@@ -36,9 +36,26 @@ ABBRTM.ABitBetterRTM.prototype.initShortcuts = function() {
 	}
 };
 
+ABBRTM.ABitBetterRTM.prototype.initShortcutsLikeGmail = function() {
+	this.shortcuts.push(new ABBRTM.Shortcut(71, this.autocompletes.goTo, this.autocompletes.goTo.show, false, false, false)); // g
+	this.shortcuts.push(new ABBRTM.Shortcut(86, this.autocompletes.moveTo, this.autocompletes.moveTo.show, false, false, false)); // v
+	this.shortcuts.push(new ABBRTM.Shortcut(191, null, function(){$("#listFilter").focus().effect('highlight', '', 'slow');}, false, true, false)); // / with Shift explicit. This depends on the keyboard though. WTF?!
+
+	if (ABBRTM.configuration.displayTabsToTheLeft()) {
+		this.shortcuts.push(new ABBRTM.Shortcut(74, this.listTabs, this.listTabs.selectNextList, false, true, false));
+		this.shortcuts.push(new ABBRTM.Shortcut(75, this.listTabs, this.listTabs.selectPreviousList, false, true, false));
+		this.shortcuts.push(new ABBRTM.Shortcut(79, this.listTabs, this.listTabs.openSelectedList, false, true, false));
+		
+		if (ABBRTM.configuration.quickAddList()) {
+			this.shortcuts.push(new ABBRTM.Shortcut(81, this.listTabs.listAdder, this.listTabs.listAdder.showListEntryBox, false, false, false));
+		}
+	}
+};
+
+
 ABBRTM.ABitBetterRTM.prototype.initAutocompletes = function() {
-	this.autocompletes.goTo = new ABBRTM.Autocomplete("GO TO: ", new ABBRTM.ListAutocompleteStore(this.listTabs), this.listTabs, this.listTabs.selectListByName);
-	this.autocompletes.moveTo = new ABBRTM.Autocomplete("MOVE TO: ", new ABBRTM.ListAutocompleteStore(this.listTabs), this.listTabs, this.listTabs.moveSelectedTasksToListByName);
+	this.autocompletes.goTo = new ABBRTM.Autocomplete("Go to: ", new ABBRTM.ListAutocompleteStore(this.listTabs), this.listTabs, this.listTabs.selectListByName);
+	this.autocompletes.moveTo = new ABBRTM.Autocomplete("Move to: ", new ABBRTM.ListAutocompleteStore(this.listTabs), this.listTabs, this.listTabs.moveSelectedTasksToListByName);
 }
 
 ABBRTM.ABitBetterRTM.prototype.overrideBodyKeyDownHandler = function() {
