@@ -14,6 +14,9 @@ ABBRTM.ABitBetterRTM = function() {
 	this.initAutocompletes();
 	this.initShortcutsLikeGmail();
 	this.overrideBodyKeyDownHandler();
+	
+	this.makeSearchBoxLoseFocus();
+	this.makeSmartAddBoxLoseFocusWhenDone();
 
     settingsTabs.addEntry("A Bit Better RTM");
     settingsView.addState("A Bit Better RTM", [this.settings], settingsTabs);
@@ -97,3 +100,25 @@ ABBRTM.ABitBetterRTM.prototype.overrideBodyKeyDownHandler = function() {
 		};	
 	}
 }
+
+ABBRTM.ABitBetterRTM.prototype.makeSearchBoxLoseFocus = function() {
+    if (control) {
+        var oldUpdateListFilter = control.updateListFilter;
+        control.updateListFilter = function(foo) {
+            oldUpdateListFilter.call(control, foo);
+            $('#listFilter').blur();
+        };
+    }
+};
+
+ABBRTM.ABitBetterRTM.prototype.makeSmartAddBoxLoseFocusWhenDone = function() {
+    var smartAdd = SmartAdd.getInstance();
+    var oldOnAddSuccess = smartAdd.onAddSuccess;
+    smartAdd.onAddSuccess = function() {
+        oldOnAddSuccess.call(smartAdd);
+        setTimeout(function() {
+            smartAdd.blur();
+        }, 0);
+    };
+};
+
