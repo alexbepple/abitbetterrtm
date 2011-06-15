@@ -18,6 +18,7 @@ Attribution
 -----------
 
 Created by Andrew Paprotsky
+
 Contributors: Alex Bepple, Christopher Joslyn
 
 Origin repository: http://code.google.com/p/abitbetterrtm/
