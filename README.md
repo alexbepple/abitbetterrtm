@@ -6,7 +6,7 @@ A Bit Better RTM
 Features
 --------
 
-A Bit Better RTM changes the way Remember The Milk looks and works when you login to their site. Amoung other things, it:
+A Bit Better RTM changes the way Remember The Milk looks and works when you login to their site. Among other things, it:
 
 * moves the list of task lists to a column on the left, and removes the tabs cluttering the top
 * adds keyboard shortcuts that help you quickly navigate lists, add list, move tasks, and search
