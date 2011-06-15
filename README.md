@@ -21,7 +21,12 @@ Created by Andrew Paprotsky
 
 Contributors: Alex Bepple, Christopher Joslyn
 
-Origin repository: http://code.google.com/p/abitbetterrtm/
+Get the original:
+
+* [Chrome extension](https://chrome.google.com/webstore/detail/glcdefibajbglmeelclffdbakgjjjopc)
+* [Firefox addon](https://addons.mozilla.org/en-us/firefox/addon/a-bit-better-rtm/)
+* [repository](http://code.google.com/p/abitbetterrtm/)
+
 
 [rtm]: http://www.rememberthemilk.com/
 
