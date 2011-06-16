@@ -17,7 +17,7 @@ ABBRTM.ListAutocompleteStore.prototype.getCompletions = function(text)
 		{
 			for (var i = 0; i < entries.length; ++i)
 			{
-				if (entries[i].toLowerCase().indexOf(text.toLowerCase()) === 0 && !ABBRTM.configuration.isListHidden(data[i][1]))
+				if (entries[i].toLowerCase().indexOf(text.toLowerCase()) === 0 && (!ABBRTM.configuration.isListHidden(data[i][1]) || ABBRTM.configuration.autocompleteHidden()))
 				{
 					completions.push(entries[i]);
 				}
