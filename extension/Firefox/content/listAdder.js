@@ -2,12 +2,14 @@ var ABBRTM = window.ABBRTM || {};
 
 ABBRTM.ListAdder = function()
 {
+	var iconUrl = globalScope.Utility.getImageUrl('/img/ico/ico_add.gif');
+
 	this.$div = $('<div>')
 	.width(90)
 	.attr({id: "listAdder"})
 	.addClass("addEntryTask")
 	.css({padding: "3px"})
-	.html('<div><img class="taskaddicon" src="http://static.rememberthemilk.com/img/ico/ico_add.gif" alt="Add task"><a title="Add list" href="#" class="taskadd" style="text-decoration: underline;">Add List</a></div>');
+	.html('<div><img class="taskaddicon" src="' + iconUrl + '" alt="Add task"><a title="Add list" href="#" class="taskadd" style="text-decoration: underline;">Add List</a></div>');
 
 	this.$progressBar = $('<img/>')
 	.attr({src: "data:image/gif;base64,R0lGODlhCgAKALMIAP7%2B%2FuDg4MzMzL29vbCwsJycnI2NjXx8fP4BAgAAAAAAAAAAAAAAAAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2BQQFBwAIACwAAAAACgAKAAAELxChUM4pQaJh%2BxnTYRwAwB2UAYxGwFUBEFiqt1rxXA0Bu2KWQUmE2niCGooFI4kAACH5BAUHAAgALAEAAQAIAAgAAAQaEElkJiKhCklQsMiBDCBIitbXIZsRrFIFSBEAIfkEBQcACAAsAQABAAgACAAABB8QIUOOlAKMMtHJFSJIgWGQ6GQEmEeI1lkMwHgdxIlEACH5BAUHAAgALAIAAQAGAAgAAAQZEI2JkAlgGBkCEhUCVMCIHCHoDdYABJtERQAh%2BQQFBwAIACwCAAEABgAIAAAEFxAdhIwUCIiJCDEEII1k9nnUIYhblSIRACH5BAUHAAgALAIAAQAGAAgAAAQZEKFDihwSEIGMGIYkDpjYDUIoEMAlFcQhRQAh%2BQQFBwAIACwBAAEACAAIAAAEGhBJdIyZKOSBUQHApSHWIVVXRoJFN2ijVGIRACH5BAUHAAgALAEAAQAIAAgAAAQgEEl5jjQCBVEMGleAdJUkAMMAZEhlFJr3Ia8gCnI5IREAIfkEBQcACAAsAQACAAgABgAABBkQHQTAOMeYgrpAA8BNiPBJSGGVXaphIYBGADs%3D"})
