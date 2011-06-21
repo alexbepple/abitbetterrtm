@@ -307,6 +307,7 @@ ABBRTM.ListTabs.prototype.blitDiv = function() {
 		var that = this;
 		$list.sortable(
 				{
+          delay: 500,
 					items: 'li[listid]',
 					forcePlaceholderSize: true,
 					placeholder: 'abr-draggable-placeholder',
