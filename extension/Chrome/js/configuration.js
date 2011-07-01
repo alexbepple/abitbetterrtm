@@ -76,3 +76,12 @@ ABBRTM.Configuration.prototype.taskListWidth = function(value) {
 	}
 };
 
+ABBRTM.Configuration.prototype.autocompleteHidden = function(value) {
+	if (value !== undefined) {
+		localStorage["abr_autocompleteHidden"] = value;
+	}
+	else {
+		return localStorage["abr_autocompleteHidden"] !== "false";
+	}
+};
+

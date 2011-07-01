@@ -113,3 +113,13 @@ ABBRTM.Configuration.prototype.taskListWidth = function(value) {
 	}
 };
 
+ABBRTM.Configuration.prototype.autocompleteHidden = function(value) {
+	if (value !== undefined) {
+		this._autocompleteHidden = value;
+		ABBRTM.communicator.call({id: "autocompleteHidden", direction: "set", data: value });
+	}
+	else {
+		return this._autocompleteHidden;
+	}
+};
+
