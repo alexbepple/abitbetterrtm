@@ -12,7 +12,7 @@ ABBRTM.Settings = function()
 	}
 
 	this.div.style.display = "none";
-	this.div.innerHTML = '<div style="padding: 12px 25px 21px;" class="contentboxwrap"><form id="abitbetterrtmform" autocomplete="off"><table style="width: 100%;"><tr><td class="label"><label>Tasks count</label></td><td class="field" colspan="2"><span><input id="abbrtm_taskscount_on" name="showtaskscount" type="radio" /><label for="abbrtm_taskscount_on" style="font-weight: normal;">On</label></span><span style="padding-left: 9px;"><input id="abbrtm_taskscount_off" name="showtaskscount" type="radio" /><label for="abbrtm_taskscount_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="label"><label>Tabs on the left</label></td><td class="field" colspan="2"><span><input id="abbrtm_tabsontheleft_on" name="abbrtm_tabsontheleft" type="radio" /><label for="abbrtm_tabsontheleft_on" style="font-weight: normal;">On</label></span><span style="padding-left: 9px;"><input id="abbrtm_tabsontheleft_off" name="abbrtm_tabsontheleft" type="radio" /><label for="abbrtm_tabstotheleft_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="label"><label>Quick add list</label></td><td class="field" colspan="2"><span><input id="abbrtm_quickaddlist_on" name="abbrtm_quickaddlist" style="font-weight: normal;" type="radio">On</label></span><span style="padding-left: 9px;"><input id="abbrtm_quickaddlist_off" name="abbrtm_quickaddlist" type="radio" /><label for="abbrtm_quickaddlist_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="label"><label>Unique URL for list/task</label></td><td class="field" colspan="2"><span><input id="abbrtm_uniqueurl_on" name="abbrtm_uniqueurl" style="font-weight: normal;" type="radio">On</label></span><span style="padding-left: 9px;"><input id="abbrtm_uniqueurl_off" name="abbrtm_uniqueurl" type="radio" /><label for="abbrtm_uniqueurl_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="hiddenlabel"><label for="settingssubmit">Save Changes</label></td><td class="field" colspan="2"><input id="abbrtm_settingssubmit" name="settingssave" type="button" value="Save Changes" /><label for="settingscancel" style="display: none;">Cancel</label><input id="abbrtm_settingscancel" name="settingscancel" type="button" value="Cancel" /></td></tr></table></form></div>';
+	this.div.innerHTML = '<div style="padding: 12px 25px 21px;" class="contentboxwrap"><form id="abitbetterrtmform" autocomplete="off" name="abitbetterrtmform"><table style="width: 100%;"><tr><td class="label"><label>Tasks count</label></td><td class="field" colspan="2"><span><input id="abbrtm_taskscount_on" name="showtaskscount" type="radio"><label for="abbrtm_taskscount_on" style="font-weight: normal;">On</label></span><span style="padding-left: 9px;"><input id="abbrtm_taskscount_off" name="showtaskscount" type="radio"><label for="abbrtm_taskscount_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="label"><label>Tabs on the left</label></td><td class="field" colspan="2"><span><input id="abbrtm_tabsontheleft_on" name="abbrtm_tabsontheleft" type="radio"><label for="abbrtm_tabsontheleft_on" style="font-weight: normal;">On</label></span><span style="padding-left: 9px;"><input id="abbrtm_tabsontheleft_off" name="abbrtm_tabsontheleft" type="radio"><label for="abbrtm_tabstotheleft_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="label"><label>Quick add list</label></td><td class="field" colspan="2"><span><input id="abbrtm_quickaddlist_on" name="abbrtm_quickaddlist" style="font-weight: normal;" type="radio">On</span><span style="padding-left: 9px;"><input id="abbrtm_quickaddlist_off" name="abbrtm_quickaddlist" type="radio"><label for="abbrtm_quickaddlist_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="label"><label>Unique URL for list/task</label></td><td class="field" colspan="2"><span><input id="abbrtm_uniqueurl_on" name="abbrtm_uniqueurl" style="font-weight: normal;" type="radio">On</span><span style="padding-left: 9px;"><input id="abbrtm_uniqueurl_off" name="abbrtm_uniqueurl" type="radio"><label for="abbrtm_uniqueurl_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="label"><label>Autocomplete hidden lists</label></td><td class="field" colspan="2"><span><input id="abbrtm_autocompletehidden_on" name="abbrtm_autocompletehidden" style="font-weight: normal;" type="radio">On</span><span style="padding-left: 9px;"><input id="abbrtm_autocompletehidden_off" name="abbrtm_autocompletehidden" type="radio"><label for="abbrtm_autocompletehidden_off" style="font-weight: normal;">Off</label></span></td></tr><tr><td class="hiddenlabel"><label for="settingssubmit">Save Changes</label></td><td class="field" colspan="2"><input id="abbrtm_settingssubmit" name="settingssave" type="button" value="Save Changes"><label for="settingscancel" style="display: none;">Cancel</label><input id="abbrtm_settingscancel" name="settingscancel" type="button" value="Cancel"></td></tr></table></form></div>';
 
 	this.tasksCount_on = document.getElementById("abbrtm_taskscount_on");
 	this.tasksCount_off = document.getElementById("abbrtm_taskscount_off");
@@ -22,6 +22,8 @@ ABBRTM.Settings = function()
 	this.quickAddList_off = document.getElementById("abbrtm_quickaddlist_off");
 	this.uniqueURL_on = document.getElementById("abbrtm_uniqueurl_on");
 	this.uniqueURL_off = document.getElementById("abbrtm_uniqueurl_off");
+	this.autocompleteHidden_on = document.getElementById("abbrtm_autocompletehidden_on");
+	this.autocompleteHidden_off = document.getElementById("abbrtm_autocompletehidden_off");
 	this.settingsSave = document.getElementById("abbrtm_settingssubmit");
 	this.settingsCancel = document.getElementById("abbrtm_settingscancel");
 	this.settingsSave.disabled = true;
@@ -65,6 +67,8 @@ ABBRTM.Settings.prototype.init = function()
 	this.quickAddList_off.addEventListener("click", optionClickHandler, false);
 	this.uniqueURL_on.addEventListener("click", optionClickHandler, false);
 	this.uniqueURL_off.addEventListener("click", optionClickHandler, false);
+	this.autocompleteHidden_on.addEventListener("click", optionClickHandler, false);
+	this.autocompleteHidden_off.addEventListener("click", optionClickHandler, false);
 	this.settingsCancel.addEventListener("click", cancelClickHandler, false);;
 	this.settingsSave.addEventListener("click", saveClickHandler, false);;
 }
@@ -111,6 +115,15 @@ ABBRTM.Settings.prototype.loadSettings = function()
 	{
 		this.uniqueURL_off.checked = 'true';
 	}
+
+	if (ABBRTM.configuration.autocompleteHidden() === true)
+	{
+		this.autocompleteHidden_on.checked = 'true';
+	}
+	else
+	{
+		this.autocompleteHidden_off.checked = 'true';
+	}
 };
 
 ABBRTM.Settings.prototype.saveSettings = function()
@@ -119,6 +132,7 @@ ABBRTM.Settings.prototype.saveSettings = function()
 	ABBRTM.configuration.displayTabsToTheLeft(this.tabsOnTheLeft_on.checked);
 	ABBRTM.configuration.quickAddList(this.quickAddList_on.checked && this.tabsOnTheLeft_on.checked);
 	ABBRTM.configuration.uniqueURLForListAndTask(this.uniqueURL_on.checked);
+	ABBRTM.configuration.autocompleteHidden(this.autocompleteHidden_on.checked);
 };
 
 ABBRTM.Settings.prototype.hide = function()
